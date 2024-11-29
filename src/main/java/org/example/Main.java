@@ -18,6 +18,8 @@ public class Main {
                 System.out.println("6 - Listar Empréstimos Ativos");
                 System.out.println("7 - Listar Devoluções");
                 System.out.println("8 - Cancelar Empréstimo");
+                System.out.println("9 - Cadastrar Periódico");
+                System.out.println("10 - Cadastrar Aluno");
                 System.out.println("0 - Sair");
                 System.out.print("Escolha uma opção: ");
                 int opcao = Integer.parseInt(scanner.nextLine());
@@ -29,9 +31,9 @@ public class Main {
                         String nomeAutor = scanner.nextLine();
 
                         System.out.print("Digite o sobrenome do autor: ");
-                        String sobrenome = scanner.nextLine();
+                        String sobrenomeAutor = scanner.nextLine();
 
-                        CadastroAutor.cadastrarAutor(nomeAutor, sobrenome);
+                        CadastroAutor.cadastrarAutor(nomeAutor, sobrenomeAutor);
                         break;
 
                     case 2:
@@ -49,30 +51,30 @@ public class Main {
                     case 3:
                         System.out.println("==== Cadastro de Livro ====");
                         System.out.print("Digite o título do livro: ");
-                        String titulo = scanner.nextLine();
+                        String tituloLivro = scanner.nextLine();
 
                         System.out.print("Digite o ano do livro: ");
-                        int ano = Integer.parseInt(scanner.nextLine());
+                        int anoLivro = Integer.parseInt(scanner.nextLine());
 
                         System.out.print("Digite a edição do livro: ");
-                        String edicao = scanner.nextLine();
+                        String edicaoLivro = scanner.nextLine();
 
                         System.out.print("Digite o número da estante: ");
-                        int estante = Integer.parseInt(scanner.nextLine());
+                        int estanteLivro = Integer.parseInt(scanner.nextLine());
 
                         System.out.print("Digite o número total de exemplares: ");
-                        int exemplaresTotais = Integer.parseInt(scanner.nextLine());
+                        int exemplaresTotaisLivro = Integer.parseInt(scanner.nextLine());
 
                         System.out.print("Digite o número de exemplares disponíveis: ");
-                        int exemplaresDisponiveis = Integer.parseInt(scanner.nextLine());
+                        int exemplaresDisponiveisLivro = Integer.parseInt(scanner.nextLine());
 
                         System.out.print("Digite o código do autor (autor_id): ");
-                        int autorId = Integer.parseInt(scanner.nextLine());
+                        int autorIdLivro = Integer.parseInt(scanner.nextLine());
 
                         System.out.print("Digite o ID da editora (editora_id): ");
-                        int editoraId = Integer.parseInt(scanner.nextLine());
+                        int editoraIdLivro = Integer.parseInt(scanner.nextLine());
 
-                        Livro livro = new Livro(titulo, ano, edicao, estante, exemplaresTotais, exemplaresDisponiveis, autorId, editoraId);
+                        Livro livro = new Livro(tituloLivro, anoLivro, edicaoLivro, estanteLivro, exemplaresTotaisLivro, exemplaresDisponiveisLivro, autorIdLivro, editoraIdLivro);
                         livro.salvar(ConexaoBanco.conectar());
                         break;
 
@@ -88,15 +90,15 @@ public class Main {
                         String pessoaCpf = scanner.nextLine();
 
                         System.out.print("Digite o ID do material (livro) a ser emprestado: ");
-                        int materialId = Integer.parseInt(scanner.nextLine());
+                        int materialIdEmprestimo = Integer.parseInt(scanner.nextLine());
 
                         Date dataEmprestimo = new Date(System.currentTimeMillis());
 
-                        Emprestimo emprestimo = new Emprestimo(pessoaNome, pessoaTelefone, pessoaCpf, dataEmprestimo, materialId);
+                        Emprestimo emprestimo = new Emprestimo(pessoaNome, pessoaTelefone, pessoaCpf, dataEmprestimo, materialIdEmprestimo);
                         emprestimo.salvar(ConexaoBanco.conectar());
 
                         Livro livroEmprestado = new Livro();
-                        livroEmprestado.atualizarExemplaresDisponiveis(ConexaoBanco.conectar(), materialId);
+                        livroEmprestado.atualizarExemplaresDisponiveis(ConexaoBanco.conectar(), materialIdEmprestimo);
                         break;
 
                     case 5:
@@ -133,6 +135,54 @@ public class Main {
 
                         Emprestimo cancelar = new Emprestimo();
                         cancelar.cancelarEmprestimo(ConexaoBanco.conectar(), emprestimoId);
+                        break;
+
+                    case 9:
+                        System.out.println("==== Cadastro de Periódico ====");
+                        System.out.print("Digite o título do periódico: ");
+                        String tituloPeriodico = scanner.nextLine();
+
+                        System.out.print("Digite o volume do periódico: ");
+                        int volumePeriodico = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Digite o número da estante: ");
+                        int estantePeriodico = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Digite o número total de exemplares: ");
+                        int exemplaresTotaisPeriodico = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Digite o número de exemplares disponíveis: ");
+                        int exemplaresDisponiveisPeriodico = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Digite o código do autor (autor_id): ");
+                        int autorIdPeriodico = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Digite o ID da editora (editora_id): ");
+                        int editoraIdPeriodico = Integer.parseInt(scanner.nextLine());
+
+                        Periodico periodico = new Periodico(tituloPeriodico, volumePeriodico, estantePeriodico, exemplaresTotaisPeriodico, exemplaresDisponiveisPeriodico, autorIdPeriodico, editoraIdPeriodico);
+                        periodico.salvar(ConexaoBanco.conectar());
+                        break;
+
+                    case 10:
+                        System.out.println("==== Cadastro de Aluno ====");
+                        System.out.print("Digite o nome do aluno: ");
+                        String nomeAluno = scanner.nextLine();
+
+                        System.out.print("Digite o sobrenome do aluno: ");
+                        String sobrenomeAluno = scanner.nextLine();
+
+                        System.out.print("Digite a data de nascimento do aluno (YYYY-MM-DD): ");
+                        Date dataNascimentoAluno = Date.valueOf(scanner.nextLine());
+
+                        System.out.print("Digite o número do RG: ");
+                        String rgAluno = scanner.nextLine();
+
+                        System.out.print("Digite o número de matrícula: ");
+                        String matriculaAluno = scanner.nextLine();
+
+                        Aluno aluno = new Aluno(nomeAluno, sobrenomeAluno, dataNascimentoAluno, rgAluno, matriculaAluno);
+                        aluno.salvar(ConexaoBanco.conectar());
                         break;
 
                     case 0:
